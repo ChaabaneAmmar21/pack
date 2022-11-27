@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
-import { saveShippingAddress } from "../redux/action/cartAction";
+import { savePaymentMethod, saveShippingAddress } from "../redux/action/cartAction";
 
 const ShippingScreen = ({history}) => {
   window.scrollTo(0, 0);
@@ -17,7 +17,12 @@ const ShippingScreen = ({history}) => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(saveShippingAddress({address,city,postalCode,country}))
-    history.push("/payment")
+
+      dispatch(savePaymentMethod("PayPal"))
+   
+      history.push("/placeorder")
+   
+   
   };
   return (
     <>

@@ -8,8 +8,18 @@ productsRoutes.get(
     "/",
     asyncHandler(
         async(req ,res)=>{
-            const products=await Product.find({});
-            res.json(products)
+            const pageSize=6
+            const page=Number(req.query.pagenumber)||1
+            const keyword=req.query.keyword?{
+                name:{
+                    $regex:req.query.keyword,
+                    $options:"i"
+                }
+            }:{}
+            const count=await Product.countDocuments({...keyword});
+            const products=await Product.find({...keyword}).limit(pageSize).skip(pageSize*(page-1)).sort({id:-1});
+
+            res.json({products,page, pages:Math.ceil(count/pageSize)})
         }
     )
 )
@@ -37,10 +47,11 @@ productsRoutes.post(
         const{rating,comment}=req.body
         const product=await Product.findById(req.params.id)
         if (product) {
-          const alreadyReviewed=product.reviews.find(
-            (r)=>r.user.toString()===req.user._id.toString()
+        console.log(product)
+          const alreadyReviewed=product.review.find(
+            (r)=>r.user._id.toString()===req.user._id.toString()
           )
-        if (alreadyReviewed) {
+        if (alreadyReviewed!=undefined) {
 
             res.status(400)
             throw new Error("Product already reviewed")
@@ -51,10 +62,10 @@ productsRoutes.post(
             comment,
             user:req.user._id
         }
-        product.reviews.push(review)
-        product.numReviews=product.reviews.length()
+        product.review.push(review)
+        product.numReviews=product.review.length
         product.rating=
-        product.reviews.reduce((acc,item)=>item.rating=acc,0)/product.reviews.length
+        product.review.reduce((acc,item)=>item.rating=acc,0)/product.review.length
         await product.save()
         res.status(201).json({message:"reviewed added"})
             

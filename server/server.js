@@ -15,9 +15,7 @@ app.use("/api/import",importdata)
 app.use("/product",productsRoutes)
 app.use("/user",userRoutes)
 app.use("/order",orderRoutes)
-app.get("/config/paypal",(req,res)=>{
-    res.send(process.env.PAYPAL_CLIENT_ID)
-})
+
 //errorhandler
 app.use(notFound)
 app.use(errorHandler)
