@@ -64,8 +64,7 @@ productsRoutes.post(
         }
         product.review.push(review)
         product.numReviews=product.review.length
-        product.rating=
-        product.review.reduce((acc,item)=>item.rating=acc,0)/product.review.length
+        // product.rating= product.review.reduce((acc,item)=>item.rating=acc,0)/product.review.length
         await product.save()
         res.status(201).json({message:"reviewed added"})
             
