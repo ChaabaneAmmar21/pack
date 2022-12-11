@@ -1,6 +1,6 @@
 import  express  from "express"
 import asyncHandler from "express-async-handler"
-import protect from "./../middleware/AuthMidleware.js"
+import { protect, admin } from "./../middleware/AuthMidleware.js"
 import user from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
 const userRoutes= express.Router()
@@ -118,6 +118,14 @@ userRoutes.put(
         }
     )
 )
+userRoutes.get(
+    "/",
+    protect,
+    admin,
+    asyncHandler(async (res, req)=>{
+        const users=await user.find({})
+        res.json(users)
 
-
+    })
+)
 export default userRoutes

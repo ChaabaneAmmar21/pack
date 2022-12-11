@@ -2,7 +2,7 @@ import  express  from "express"
 import asyncHandler from "express-async-handler"
 import Order from "../models/orderModel.js"
 
-import protect from "./../middleware/AuthMidleware.js"
+import {admin, protect} from "./../middleware/AuthMidleware.js"
 
 const orderRoutes= express.Router()
 //CREATE ORDER
@@ -44,7 +44,7 @@ orderRoutes.post(
         }
     )
 )
-//get order 
+// GET ORDER BY ID
 orderRoutes.get(
     "/:id",
     protect,
@@ -92,6 +92,45 @@ orderRoutes.put(
            
         }
     )
+)
+
+
+// ORDER IS PAID
+orderRoutes.put(
+    "/:id/delivered",
+    protect,
+    asyncHandler(
+        async(req ,res)=>{
+           const order =await Order.findById(req.params.id)
+        
+
+         if (order ) {
+            order.isDelivered=true
+            order.deliveredAt=Date.now()
+         
+            const updateOrder=await order.save()
+            req.json(updateOrder)
+         } else {
+         res.status(404)
+         throw new Error("order not found")
+         }
+           
+        }
+    )
+)
+
+
+//ADMIN GET ALL ORDER
+orderRoutes.get(
+    "/all",
+    protect,
+    admin,
+    asyncHandler(async (req,res)=>{
+        const orders=await Order.find({})
+        .sort({_id:-1})
+        .populate("user","id name email")
+        res.json(orders)
+    })
 )
 //user login orders
 orderRoutes.get(
