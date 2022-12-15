@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // @mui
 import { Box, Card, Link, Typography, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles';
 import { fCurrency } from '../../../utils/formatNumber';
 // components
 import Label from '../../../components/label';
-import { ColorPreview } from '../../../components/color-utils';
+
 
 // ----------------------------------------------------------------------
 
@@ -20,20 +20,19 @@ const StyledProductImg = styled('img')({
 
 // ----------------------------------------------------------------------
 
-ShopProductCard.propTypes = {
+/* ShopProductCard.propTypes = {
   product: PropTypes.object,
-};
+}; */
 
 export default function ShopProductCard({ product }) {
-  const { name, cover, price, colors, status, priceSale } = product;
+  const {  name,  price, description , countInStock ,image } = product;
 
   return (
-    <Card>
+    <Card >
       <Box sx={{ pt: '100%', position: 'relative' }}>
-        {status && (
+        {description && (
           <Label
             variant="filled"
-            color={(status === 'sale' && 'error') || 'info'}
             sx={{
               zIndex: 9,
               top: 16,
@@ -42,10 +41,11 @@ export default function ShopProductCard({ product }) {
               textTransform: 'uppercase',
             }}
           >
-            {status}
+            {description}
           </Label>
         )}
-        <StyledProductImg alt={name} src={cover} />
+        <StyledProductImg alt={name} src={`../../../../../client/public/${image}`} />
+        
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
@@ -56,7 +56,7 @@ export default function ShopProductCard({ product }) {
         </Link>
 
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <ColorPreview colors={colors} />
+         
           <Typography variant="subtitle1">
             <Typography
               component="span"
@@ -66,11 +66,12 @@ export default function ShopProductCard({ product }) {
                 textDecoration: 'line-through',
               }}
             >
-              {priceSale && fCurrency(priceSale)}
+              {price && fCurrency(price)}
             </Typography>
             &nbsp;
             {fCurrency(price)}
           </Typography>
+          {fCurrency( countInStock)}
         </Stack>
       </Stack>
     </Card>

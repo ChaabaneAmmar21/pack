@@ -1,9 +1,14 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 // @mui
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
 // mocks_
+import { logout } from '../../../redux/action/UserAction';
 import account from '../../../_mock/account';
+
+
 
 // ----------------------------------------------------------------------
 
@@ -25,14 +30,20 @@ const MENU_OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
+  const dispatch=useDispatch()
   const [open, setOpen] = useState(null);
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
+  const navigate=useNavigate()
 
   const handleClose = () => {
     setOpen(null);
+    dispatch(logout())
+    navigate('/dashboard/app')
+
+   
   };
 
   return (

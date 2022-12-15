@@ -1,3 +1,5 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import { Navigate, useRoutes } from 'react-router-dom';
 // layouts
 import DashboardLayout from './layouts/dashboard';
@@ -11,9 +13,23 @@ import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
 import PrivateRoute from './components/PrivateRoute';
 
+import { listUser } from './redux/action/UserAction';
+import { listProduct } from './redux/action/productAction';
+
 // ----------------------------------------------------------------------
 
 export default function Router() {
+  const dispatch =useDispatch()
+
+  const getUser=useSelector((state)=>state.userList)
+  const {users}=getUser
+ console.log(getUser)
+ useEffect(()=>{
+  dispatch(listUser())
+  dispatch(listProduct())
+    
+
+},[dispatch])
   const routes = useRoutes([
     {
       path: '/dashboard',
@@ -21,7 +37,7 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
-        { path: 'user', element: <UserPage /> },
+        { path: 'user', element: <UserPage users={users} /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
       ],

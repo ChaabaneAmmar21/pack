@@ -30,7 +30,7 @@ export const listProduct = () => async (dispatch, getstate) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.post('/product/all', config);
+    const { data } = await axios.get('/product', config);
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
   } catch (error) {
     const message = error.response && error.response.data.message ? error.response.data.message : error.response;

@@ -16,12 +16,12 @@ import {
 } from '../constants/productConstants';
 
 // ALL PRODUCT
-export const productListReducer = (state = { products: [] }, { type, payload }) => {
+export const productListReducer = (state = { prds:[] }, { type, payload }) => {
   switch (type) {
     case PRODUCT_LIST_REQUEST:
-      return { loading: true, products: [] };
+      return { loading: true, prds: [] };
     case PRODUCT_LIST_SUCCESS:
-      return { loading: false, products: payload };
+      return { loading: false, prds: payload };
     case PRODUCT_LIST_FAIL:
       return { loading: false, error: payload };
     default:
@@ -32,7 +32,7 @@ export const productListReducer = (state = { products: [] }, { type, payload }) 
 export const productDeleteReducer = (state = {}, { type, payload }) => {
   switch (type) {
     case PRODUCT_LIST_REQUEST:
-      return { loading: true, products: [] };
+      return { loading: true, prds: [] };
     case PRODUCT_LIST_SUCCESS:
       return { loading: false, success: true };
     case PRODUCT_LIST_FAIL:
@@ -57,7 +57,7 @@ export const productCreateReducer = (state = {}, { type, payload }) => {
   }
 };
 // EDIT PRODUCT
-export const productEditeReducer = (state = { products: { reviews: [] } }, { type, payload }) => {
+export const productEditeReducer = (state = { prds: { reviews: [] } }, { type, payload }) => {
   switch (type) {
     case PRODUCT_EDIT_REQUEST:
       return { loading: true };
@@ -71,7 +71,7 @@ export const productEditeReducer = (state = { products: { reviews: [] } }, { typ
   }
 };
 // UPDATE PRODUCT
-export const productUpdateReducer = (state = { products: { product: {} } }, { type, payload }) => {
+export const productUpdateReducer = (state = { prds: { product: {} } }, { type, payload }) => {
   switch (type) {
     case PRODUCT_UPDATE_REQUEST:
       return { loading: true };

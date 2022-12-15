@@ -1,4 +1,4 @@
-import { useState ,useEffect } from 'react';
+import { useState  } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 // @mui
@@ -27,7 +27,7 @@ export default function LoginForm() {
     e.preventDefault()
     dispatch(Login(email,password))
     if (userInfo) {
-      navigate("/")
+      navigate("/dashboard/app")
       
     }
   }

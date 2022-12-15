@@ -122,8 +122,9 @@ userRoutes.get(
     "/",
     protect,
     admin,
-    asyncHandler(async (res, req)=>{
+    asyncHandler(async (req, res)=>{
         const users=await user.find({})
+       
         res.json(users)
 
     })

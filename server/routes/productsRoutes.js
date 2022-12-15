@@ -32,7 +32,7 @@ productsRoutes.get(
   protect,
   admin,
   asyncHandler(async (req, res) => {
-    const products = await Product.find({}).sort({ _id: -1 });
+    const products = await Product.find({});
     res.json(products);
   })
 );

@@ -1,15 +1,43 @@
+import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import TextField from '@mui/material/TextField';
+
 // @mui
-import { Container, Stack, Typography } from '@mui/material';
+import { Button, Container, Stack, Typography } from '@mui/material';
 // components
 import { ProductSort, ProductList, ProductCartWidget, ProductFilterSidebar } from '../sections/@dashboard/products';
 // mock
-import PRODUCTS from '../_mock/products';
+import Iconify from '../components/iconify';
+
+import { listProduct } from '../redux/action/productAction';
+import Loading from '../components/loadingError/Loading';
+import Message from '../components/loadingError/Error';
 
 // ----------------------------------------------------------------------
-
+const style = {
+  position: 'absolute' ,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 export default function ProductsPage() {
+  const dispatch=useDispatch()
+
+  const prods=useSelector((state)=>state.productList)
+  console.log(prods)
+  const {prds,loading,error}=prods
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const [openFilter, setOpenFilter] = useState(false);
 
   const handleOpenFilter = () => {
@@ -19,17 +47,62 @@ export default function ProductsPage() {
   const handleCloseFilter = () => {
     setOpenFilter(false);
   };
+  React.useEffect(() => {
+    dispatch(listProduct())
+
+  }, [dispatch])
 
   return (
     <>
       <Helmet>
-        <title> Dashboard: Products | Minimal UI </title>
+        <title> Dashboard: Products  </title>
       </Helmet>
-
-      <Container>
+      {loading?<Loading/>:error?<Message>{error}</Message>:
+          <Container>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4" sx={{ mb: 5 }}>
           Products
         </Typography>
+        <div>
+     
+      <Button onClick={handleOpen} variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+            New Product
+          </Button>
+      <Modal
+        keepMounted
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="keep-mounted-modal-title"
+        aria-describedby="keep-mounted-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
+                 
+          <TextField
+          id="outlined-multiline-flexible"
+          label="Multiline"
+          multiline
+          maxRows={1}
+        />       
+        <TextField
+        id="outlined-multiline-flexible"
+        label="Multiline"
+        multiline
+        maxRows={1}
+      />
+          <TextField
+          id="outlined-multiline-flexible"
+          label="Multiline"
+          multiline
+          rows={4}
+          
+        />
+          </Typography>
+   
+        </Box>
+      </Modal>
+    </div>
+    </Stack>
 
         <Stack direction="row" flexWrap="wrap-reverse" alignItems="center" justifyContent="flex-end" sx={{ mb: 5 }}>
           <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
@@ -42,9 +115,10 @@ export default function ProductsPage() {
           </Stack>
         </Stack>
 
-        <ProductList products={PRODUCTS} />
+      {loading? "":  <ProductList products={prds} />}
         <ProductCartWidget />
-      </Container>
+      </Container>}
+  
     </>
   );
 }

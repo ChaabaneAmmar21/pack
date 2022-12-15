@@ -57,13 +57,14 @@ export const logout = () => (dispatch) => {
 export const listUser = () => async (dispatch,getstate) => {
   try {
     dispatch({ type: USER_LIST_REQUEST });
-    const {userLogin:{userInfo}}=getstate()
+    const {
+      userLogin:{userInfo}}=getstate()
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get('/user',  config);
+    const  {data}  = await axios.get('/user',  config);
     dispatch({type:USER_LIST_SUCCESS , payload: data })
   } catch (error) {
     const message = error.response && error.response.data.message ? error.response.data.message : error.response;

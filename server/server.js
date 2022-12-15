@@ -10,6 +10,7 @@ dotenv.config()
 connectdb()
 const app =express()
 app.use(express.json())
+// app.use("/uploads",express.static(""))
 //API
 app.use("/api/import",importdata)
 app.use("/product",productsRoutes)

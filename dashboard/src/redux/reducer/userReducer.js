@@ -31,7 +31,7 @@ export const userLoginReducer = (state = {}, { type, payload }) => {
 };
 
 // ALL USER
-export const userListReducer = (state = { users:[]}, { type, payload }) => {
+export const userListReducer = (state = { }, { type, payload }) => {
   switch (type) {
     case USER_LIST_REQUEST:
       return { loading: true };
