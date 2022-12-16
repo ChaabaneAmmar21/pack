@@ -15,6 +15,8 @@ import PrivateRoute from './components/PrivateRoute';
 
 import { listUser } from './redux/action/UserAction';
 import { listProduct } from './redux/action/productAction';
+import PageOrder from './pages/PageOrder';
+import { listOrders } from './redux/action/orderAction';
 
 // ----------------------------------------------------------------------
 
@@ -27,6 +29,7 @@ export default function Router() {
  useEffect(()=>{
   dispatch(listUser())
   dispatch(listProduct())
+  dispatch(listOrders())
     
 
 },[dispatch])
@@ -39,6 +42,7 @@ export default function Router() {
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'user', element: <UserPage users={users} /> },
         { path: 'products', element: <ProductsPage /> },
+        { path: 'order', element: <PageOrder /> },
         { path: 'blog', element: <BlogPage /> },
       ],
     },

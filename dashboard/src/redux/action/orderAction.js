@@ -23,7 +23,7 @@ export const listOrders = () => async (dispatch, getstate) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.post('/orders/all', config);
+    const { data } = await axios.get('/order', config);
     dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
   } catch (error) {
     const message = error.response && error.response.data.message ? error.response.data.message : error.response;
