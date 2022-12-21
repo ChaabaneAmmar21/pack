@@ -1,79 +1,43 @@
-// import PropTypes from 'prop-types';
-// @mui
-import { Box, Card, Link, Typography, Stack } from '@mui/material';
-import { styled } from '@mui/material/styles';
-// utils
-import { fCurrency } from '../../../utils/formatNumber';
-// components
-import Label from '../../../components/label';
-
-
-// ----------------------------------------------------------------------
-
-const StyledProductImg = styled('img')({
-  top: 0,
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover',
-  position: 'absolute',
-});
-
-// ----------------------------------------------------------------------
-
-/* ShopProductCard.propTypes = {
-  product: PropTypes.object,
-}; */
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { useDispatch } from 'react-redux';
+import { deleteProduct } from '../../../redux/action/productAction';
+import { useNavigate } from 'react-router-dom';
 
 export default function ShopProductCard({ product }) {
-  const {  name,  price, description , countInStock ,image } = product;
-
+  const dispatch=useDispatch()
+  const navigate=useNavigate()
+  const handelClick=()=>{
+   dispatch(deleteProduct(product._id))
+   navigate('/')
+  }
   return (
-    <Card >
-      <Box sx={{ pt: '100%', position: 'relative' }}>
-        {description && (
-          <Label
-            variant="filled"
-            sx={{
-              zIndex: 9,
-              top: 16,
-              right: 16,
-              position: 'absolute',
-              textTransform: 'uppercase',
-            }}
-          >
-            {description}
-          </Label>
-        )}
-        <StyledProductImg alt={name} src={`../../../../../client/public/${image}`} />
-        
-      </Box>
-
-      <Stack spacing={2} sx={{ p: 3 }}>
-        <Link color="inherit" underline="hover">
-          <Typography variant="subtitle2" noWrap>
-            {name}
-          </Typography>
-        </Link>
-
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
-         
-          <Typography variant="subtitle1">
-            <Typography
-              component="span"
-              variant="body1"
-              sx={{
-                color: 'text.disabled',
-                textDecoration: 'line-through',
-              }}
-            >
-              {price && fCurrency(price)}
-            </Typography>
-            &nbsp;
-            {fCurrency(price)}
-          </Typography>
-          {fCurrency( countInStock)}
-        </Stack>
-      </Stack>
+    <Card sx={{ maxWidth: 345 }}>
+      <CardMedia
+        component="img"
+        height="140"
+        image={product.image}
+        alt="green iguana"
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+        {product.name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+         {product.price}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small">Edit</Button>
+        <Button onClick={handelClick} size="small">Delete</Button>
+        <Button size="small">See Details</Button>
+       
+      </CardActions>
     </Card>
   );
 }

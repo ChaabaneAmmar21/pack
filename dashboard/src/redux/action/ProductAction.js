@@ -69,21 +69,26 @@ export const deleteProduct = (id) => async (dispatch, getstate) => {
   }
 };
 // Create product
-export const createProduct = 
-(name, price, description, image, countInStock) => async (dispatch, getstate) => {
+export const addProduct = (newProduct, navigate) => async (dispatch,getstate) => {
   try {
     dispatch({ type: PRODUCT_CREATE_REQUEST });
     const {
       userLogin: { userInfo },
     } = getstate();
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
+    const opts = {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
     };
-    const { data } = await axios.post(`/product`, { name, price, description, image, countInStock }, config);
-    dispatch({ type: PRODUCT_CREATE_SUCCESS, payload: data });
+    const response = await axios.post(
+      "/product/addProduct",
+      newProduct,
+      opts
+    );
+    console.log(response);
+    dispatch({ type: PRODUCT_CREATE_SUCCESS });
+    dispatch(listProduct());
+    navigate("/");
   } catch (error) {
+ 
     const message = error.response && error.response.data.message ? error.response.data.message : error.response;
     if (message === 'Not autorized, token failed') {
       dispatch(logout());
@@ -92,6 +97,7 @@ export const createProduct =
       type: PRODUCT_CREATE_FAIL,
       payload: message,
     });
+  
   }
 };
 // EDIT product

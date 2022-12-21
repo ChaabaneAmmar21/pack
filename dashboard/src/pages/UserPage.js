@@ -12,12 +12,12 @@ import {
   Popover,
   Checkbox,
   TableRow,
-  MenuItem,
+
   TableBody,
   TableCell,
   Container,
   Typography,
-  IconButton,
+
   TableContainer,
   TablePagination,
 } from '@mui/material';
@@ -95,9 +95,6 @@ export default function UserPage() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleOpenMenu = (event) => {
-    setOpen(event.currentTarget);
-  };
 
   const handleCloseMenu = () => {
     setOpen(null);
@@ -219,11 +216,7 @@ export default function UserPage() {
 
                        
 
-                        <TableCell align="right">
-                          <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                            <Iconify icon={'eva:more-vertical-fill'} />
-                          </IconButton>
-                        </TableCell>
+              
                       </TableRow>
                     );
                   })}
@@ -291,15 +284,7 @@ export default function UserPage() {
           },
         }}
       >
-        <MenuItem>
-          <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-          Edit
-        </MenuItem>
-
-        <MenuItem sx={{ color: 'error.main' }}>
-          <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
-          Delete
-        </MenuItem>
+  
       </Popover></> }
 
     

@@ -3,9 +3,7 @@ import {
   PRODUCT_CREATE_REQUEST,
   PRODUCT_CREATE_RESET,
   PRODUCT_CREATE_SUCCESS,
-  PRODUCT_EDIT_FAIL,
-  PRODUCT_EDIT_REQUEST,
-  PRODUCT_EDIT_SUCCESS,
+
   PRODUCT_LIST_FAIL,
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
@@ -14,73 +12,65 @@ import {
   PRODUCT_UPDATE_RESET,
   PRODUCT_UPDATE_SUCCESS,
 } from '../constants/productConstants';
-
+const initialState={
+  prds:[],
+  loading:false,
+  error:null,
+  success:false,
+  product:{},
+}
 // ALL PRODUCT
-export const productListReducer = (state = { prds:[] }, { type, payload }) => {
+export const productListReducer = (state = initialState , { type, payload }) => {
   switch (type) {
     case PRODUCT_LIST_REQUEST:
-      return { loading: true, prds: [] };
+      return { ...state,loading: true };
     case PRODUCT_LIST_SUCCESS:
-      return { loading: false, prds: payload };
+      return { ...state,loading: false, prds: payload };
     case PRODUCT_LIST_FAIL:
-      return { loading: false, error: payload };
+      return { ...state,loading: false, error: payload };
     default:
       return state;
   }
 };
 // DELETE PRODUCT
-export const productDeleteReducer = (state = {}, { type, payload }) => {
+export const productDeleteReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case PRODUCT_LIST_REQUEST:
-      return { loading: true, prds: [] };
+      return { ...state,loading: true, prds: [] };
     case PRODUCT_LIST_SUCCESS:
-      return { loading: false, success: true };
+      return { ...state,loading: false, success: true };
     case PRODUCT_LIST_FAIL:
-      return { loading: false, error: payload };
+      return { ...state,loading: false, error: payload };
     default:
       return state;
   }
 };
 // CREATE PRODUCT
-export const productCreateReducer = (state = {}, { type, payload }) => {
+export const productCreateReducer = (state = initialState , { type, payload }) => {
   switch (type) {
     case PRODUCT_CREATE_REQUEST:
-      return { loading: true };
+      return { ...state,loading: true };
     case PRODUCT_CREATE_SUCCESS:
-      return { loading: false, success: true, product: payload };
+      return { ...state,loading: false, success: true, product: payload };
     case PRODUCT_CREATE_FAIL:
-      return { loading: false, error: payload };
+      return { ...state,loading: false, error: payload };
     case PRODUCT_CREATE_RESET:
       return {};
     default:
       return state;
   }
 };
-// EDIT PRODUCT
-export const productEditeReducer = (state = { prds: { reviews: [] } }, { type, payload }) => {
-  switch (type) {
-    case PRODUCT_EDIT_REQUEST:
-      return { loading: true };
-    case PRODUCT_EDIT_SUCCESS:
-      return { loading: false, product: payload };
-    case PRODUCT_EDIT_FAIL:
-      return { loading: false, error: payload };
-
-    default:
-      return state;
-  }
-};
 // UPDATE PRODUCT
-export const productUpdateReducer = (state = { prds: { product: {} } }, { type, payload }) => {
+export const productUpdateReducer = (state = initialState , { type, payload }) => {
   switch (type) {
     case PRODUCT_UPDATE_REQUEST:
-      return { loading: true };
+      return { ...state,loading: true };
     case PRODUCT_UPDATE_SUCCESS:
-      return { loading: false, success: true, product: payload };
+      return { ...state,loading: false, success: true, product: payload };
     case PRODUCT_UPDATE_FAIL:
-      return { loading: false, error: payload };
+      return { ...state,loading: false, error: payload };
     case PRODUCT_UPDATE_RESET:
-      return { product:{} };
+      return { ...state,product:{} };
 
     default:
       return state;

@@ -11,6 +11,7 @@ import {
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
 } from '../constants/userConstant';
+
 // LOGIN
 export const Login = (email, password) => async (dispatch) => {
   const ToastObject = {

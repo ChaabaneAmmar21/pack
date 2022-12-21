@@ -1,16 +1,16 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // @mui
 import { Grid } from '@mui/material';
 import ShopProductCard from './ProductCard';
 
 // ----------------------------------------------------------------------
 
-/* ProductList.propTypes = {
+ ProductList.propTypes = {
   products: PropTypes.array.isRequired,
-}; */
+}; 
 
 export default function ProductList(prop) {
-  console.log(prop)
+ 
   var x=0;
 
   return (

@@ -40,6 +40,7 @@ const productSchema=mongoose.Schema({
     rating:{
         type:Number,
         required:true,
+        default :5
         
     },
     numReviews:{

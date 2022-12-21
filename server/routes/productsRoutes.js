@@ -2,6 +2,7 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import Product from "./../models/productModel.js";
 import { admin, protect } from "./../middleware/AuthMidleware.js";
+import {upload} from "../utils/multer.js";
 //getAll
 const productsRoutes = express.Router();
 productsRoutes.get(
@@ -88,7 +89,7 @@ productsRoutes.delete(
   protect,
   admin,
   asyncHandler(async (req, res) => {
-    const product = await Product.find(req.params.id);
+    const product = await Product.findById(req.params.id);
     if (product) {
       await product.remove();
       res.json({ message: "Product deleted" });
@@ -150,4 +151,26 @@ productsRoutes.put(
     }
   })
 );
+productsRoutes.post(
+  "/addProduct",
+  protect,admin,
+  upload("products").single("file"),
+  asyncHandler(async (req, res) => {
+    const url = `${req.protocol}://${req.get("host")}`;
+    console.log(req.file);
+    const { file } = req;
+    try {
+      const newproduct = await new Product({
+        ...req.body,
+        user: req.user._id,
+      });
+      newproduct.image = `${url}/${file.path}`;
+      await newproduct.save();
+      res.send({ newproduct, msg: "product succefully added" });
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+  }
+  
+));
 export default productsRoutes;

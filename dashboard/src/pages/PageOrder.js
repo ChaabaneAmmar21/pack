@@ -10,7 +10,6 @@ import {
   Paper,
   Button,
   Popover,
-  Checkbox,
   TableRow,
   MenuItem,
   TableBody,
@@ -118,7 +117,7 @@ export default function PageOrder() {
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
+/*   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
     if (selectedIndex === -1) {
@@ -131,7 +130,7 @@ export default function PageOrder() {
       newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
     }
     setSelected(newSelected);
-  };
+  }; */
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

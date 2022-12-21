@@ -12,16 +12,22 @@ import {
 
 
 } from '../constants/userConstant';
+const initialState={
+  users:[],
+  userInfo:{},
+  loading:false,
+  error:null
 
+}
 // LOGIN
-export const userLoginReducer = (state = {}, { type, payload }) => {
+export const userLoginReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case USER_LOGIN_REQUEST:
-      return { loading: true };
+      return { ...state, loading: true };
     case USER_LOGIN_SUCCESS:
-      return { loading: false, userInfo: payload };
+      return { ...state,loading: false, userInfo: payload };
     case USER_LOGIN_FAIL:
-      return { loading: false, error: payload };
+      return { ...state,loading: false, error: payload };
     case USER_LOGOUT:
       return {};
 
@@ -31,16 +37,16 @@ export const userLoginReducer = (state = {}, { type, payload }) => {
 };
 
 // ALL USER
-export const userListReducer = (state = { }, { type, payload }) => {
+export const userListReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case USER_LIST_REQUEST:
-      return { loading: true };
+      return { ...state, loading: true };
     case USER_LIST_SUCCESS:
-      return { loading: false, users: payload };
+      return {...state, loading: false, users: payload };
     case USER_LIST_FAIL:
-      return { loading: false, error: payload };
+      return { ...state,loading: false, error: payload };
     case USER_LIST_RESET:
-      return {users:[]};
+      return {...state,users:[]};
 
     default:
       return state;

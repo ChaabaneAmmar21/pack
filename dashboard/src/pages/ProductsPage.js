@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import TextField from '@mui/material/TextField';
+
 
 // @mui
 import { Button, Container, Stack, Typography } from '@mui/material';
@@ -16,6 +16,7 @@ import Iconify from '../components/iconify';
 import { listProduct } from '../redux/action/productAction';
 import Loading from '../components/loadingError/Loading';
 import Message from '../components/loadingError/Error';
+import AddProduct from '../components/adProduct';
 
 // ----------------------------------------------------------------------
 const style = {
@@ -76,29 +77,7 @@ export default function ProductsPage() {
         aria-describedby="keep-mounted-modal-description"
       >
         <Box sx={style}>
-          <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
-                 
-          <TextField
-          id="outlined-multiline-flexible"
-          label="Multiline"
-          multiline
-          maxRows={1}
-        />       
-        <TextField
-        id="outlined-multiline-flexible"
-        label="Multiline"
-        multiline
-        maxRows={1}
-      />
-          <TextField
-          id="outlined-multiline-flexible"
-          label="Multiline"
-          multiline
-          rows={4}
-          
-        />
-          </Typography>
-   
+         <AddProduct/>
         </Box>
       </Modal>
     </div>

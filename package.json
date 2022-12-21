@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ChaabaneAmmar21/pack#readme",
   "dependencies": {
-    "concurrently": "^7.6.0"
+    "concurrently": "^7.6.0",
+    "cors": "^2.8.5"
   }
 }
